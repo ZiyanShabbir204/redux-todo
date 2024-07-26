@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { deleteUser, userData } from "../api/jsonApi";
 import { useDispatch, useSelector } from "react-redux";
-import { removeUser, setUserKey } from "../store/slices/UserSlice";
+import { editUser, removeUser, setUserKey } from "../store/slices/UserSlice";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -11,10 +11,16 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
-
-const User = () => {
+const User = ({ id, name, email, username }) => {
+  const [textField, setTextField] = useState(false);
+  const [nameState, setNameState] = useState("");
+  const [emailState, setEmailState] = useState("");
+  const [usernameState, setUsernameState] = useState("");
+  const [testState, setTestState] = useState("test");
   const dispatch = useDispatch();
+  
   const deleteHandler = (id) => {
     console.log(id);
     deleteUser(id);
@@ -22,91 +28,112 @@ const User = () => {
   };
 
   const editHandler = (id) => {
-    dispatch(setUserKey(id));
+    setTextField(!textField);
+    setNameState(name);
+    setEmailState(email);
+    setUsernameState(username);
   };
-  const users = useSelector((state) => state.User.users);
+
+  const changeHandler = (id) => {
+    console.log("name", nameState);
+    const payload = {
+      id: id,
+      name: nameState,
+      email: emailState,
+      username: usernameState,
+    };
+    dispatch(setUserKey(id));
+    dispatch(editUser(payload));
+    setTextField(!textField);
+  };
+
+  const Text = () => {
+    return (
+      <>
+        <Typography variant="h5" component="div" type="input">
+          {name}
+        </Typography>
+        <Typography variant="h6" component="div">
+          {username}
+        </Typography>
+        <Typography variant="h6" component="div">
+          {email}
+        </Typography>
+      </>
+    );
+  };
+
   return (
-    <div>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 4, sm: 8, md: 12 }}
-          
-        >
-          {users.map((user)=>(
-            <Grid item xs={2} sm={4} md={4} key={user.id} sx={{display:"flex",justifyContent:"center"}} >
-            <Card sx={{ minWidth: 275, marginTop: 2, maxWidth: 300 ,textAlign:"center"}}>
-              <CardContent>
-                <Typography variant="h5" component="div">
-                  {user.name}
-                </Typography>
-                <Typography variant="h6" component="div">
-                  {user.username}
-                </Typography>
-                <Typography variant="h6" component="div">
-                  {user.email}
-                </Typography>
-              </CardContent>
-              <CardActions sx={{display:"flex",justifyContent:"center"}}>
-                <IconButton
-                  aria-label="delete"
-                  size="large"
-                  color="error"
-                  onClick={() => deleteHandler(user.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-               
-                
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={() => editHandler(user.id)}
-                >
-                  Edit
-                </Button>
-               
-              </CardActions>
-            </Card>
-          </Grid>
-          ))}
-        </Grid>
-      </Box>
-      {/* {users.map((user, index) => (
-       
-        <Card sx={{ minWidth: 275, marginTop: 2, maxWidth: 300 }}>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              {user.name}
-            </Typography>
-            <Typography variant="h6" component="div">
-              {user.username}
-            </Typography>
-            <Typography variant="h6" component="div">
-              {user.email}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <IconButton
-              aria-label="delete"
-              size="large"
-              color="error"
-              onClick={() => deleteHandler(user.id)}
-            >
-              <DeleteIcon />
-            </IconButton>
+    <Grid
+      item
+      xs={12}
+      sm={4}
+      md={4}
+      key={id}
+      sx={{ display: "flex", justifyContent: "center" }}
+    >
+      <Card
+        sx={{ minWidth: 275, marginTop: 2, maxWidth: 300, textAlign: "center" }}
+      >
+        <CardContent>
+          {textField ? (
+            <>
+              <TextField
+                id="standard-basic"
+                label="name"
+                value={nameState}
+                onChange={(e) => {
+                  setNameState(e.target.value);
+                }}
+                variant="standard"
+              />
+              <TextField
+                id="standard-basic"
+                label="username"
+                value={usernameState}
+                onChange={(e) => setUsernameState(e.target.value)}
+                variant="standard"
+              />
+              <TextField
+                id="standard-basic"
+                label="email"
+                value={emailState}
+                onChange={(e) => setEmailState(e.target.value)}
+                variant="standard"
+              />
+            </>
+          ) : (
+            <Text />
+          )}
+        </CardContent>
+        <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+          {textField ? (
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
-              onClick={() => editHandler(user.id)}
+              onClick={() => changeHandler(id)}
             >
-              Edit
+              Update
             </Button>
-          </CardActions>
-        </Card>
-      ))} */}
-    </div>
+          ) : (
+            <>
+              <IconButton
+                aria-label="delete"
+                size="large"
+                color="error"
+                onClick={() => deleteHandler(id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+
+              <Button variant="outlined" color="primary" onClick={editHandler}>
+                Edit
+              </Button>
+            </>
+          )}
+        </CardActions>
+      </Card>
+    </Grid>
   );
 };
 

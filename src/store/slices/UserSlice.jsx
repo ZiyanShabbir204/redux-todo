@@ -2,13 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice =  createSlice({
     name : "todo",
-    initialState: {users: [],userKey:null},
+    initialState: {users: [],userKey:null,loader:true},
     reducers : {
         addUser(state,action){
-            action.payload.map(user=> state.users.push(user))
-            console.log("inside reducer",action.payload)
-            
-
+            state.users = action.payload
             
         },
         removeUser(state,action){
@@ -19,6 +16,12 @@ const userSlice =  createSlice({
             return {users: [],userKey:null}
     
         },
+        setLoader(state,action){
+            state.loader = false
+
+        },
+
+
         postUser(state,action){
             state.users.push(action.payload)
 
@@ -49,7 +52,7 @@ const userSlice =  createSlice({
 
 console.log(userSlice.actions);
 
-export const {addUser,removeUser,deleteAllUser,setUserKey,editUser,postUser} = userSlice.actions
+export const {addUser,removeUser,deleteAllUser,setUserKey,editUser,postUser,setLoader} = userSlice.actions
 
 
 

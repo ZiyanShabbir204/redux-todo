@@ -1,11 +1,7 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editUser, postUser } from "../store/slices/UserSlice";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import { outlinedInputClasses } from "@mui/material/OutlinedInput";
-import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { Stack } from "@mui/material";
@@ -14,7 +10,8 @@ const UserDetail = () => {
   const name = useRef();
   const username = useRef();
   const email = useRef();
-  const checkRef = useRef();
+
+
 
   const data = useSelector((state) => state.User);
   const dispatch = useDispatch();
@@ -49,7 +46,7 @@ const UserDetail = () => {
 
   return (
     <>
-      <Stack spacing={2} justifyContent="center" alignItems="center">
+      <Stack spacing={2} justifyContent="center" alignItems="center" marginTop={10}>
         <TextField label="Name" sx={{ width: "250px" }} inputRef={name} />
         <TextField
           label="Username"
@@ -57,42 +54,13 @@ const UserDetail = () => {
           inputRef={username}
         />
         <TextField label="Email" sx={{ width: "250px" }} inputRef={email} />
+      
 
         <Button variant="contained" endIcon={<AddIcon />} onClick={submitHandler}>
           Add User
         </Button>
       </Stack>
-      {/* <div>
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        onSubmit={submitHandler}
-      >
-       
-        <label style={{ marginTop: 10 }}>
-          Enter Name:
-          <input ref={name} type="text" name="userID" />
-        </label>
-        <label style={{ marginTop: 10 }}>
-          Enter Username :
-          <input ref={username} type="text" name="userID" />
-        </label>
-        <label style={{ marginTop: 10 }}>
-          Enter Email :
-          <input ref={email} type="text" name="userID" />
-        </label>
-
-        {!data.userKey ? (
-          <button type="Submit" style={{ width: "fit-content" }}>
-            Post
-          </button>
-        ) : (
-          <button type="Submit" style={{ width: "fit-content" }}>
-            EDIT
-          </button>
-        )}
-      </form>
      
-    </div> */}
     </>
   );
 };
