@@ -8,20 +8,14 @@ import './App.css'
 
 function App() {
 
-  const router = createBrowserRouter([
-    {
-      path:"/",
-      element: <Users/>
 
-  },{
-    path:"/userdetail",
-    element:<UserDetail/>
-  }])
 
   return (
     <>
      <h1>Extracting Data From Json Placeholder</h1>
-     <RouterProvider router={router}/>
+     <UserDetail/>
+     <Users/>
+    
     </>
   )
 }

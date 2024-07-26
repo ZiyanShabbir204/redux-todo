@@ -3,19 +3,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { editUser, postUser } from "../store/slices/UserSlice";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import TextField from '@mui/material/TextField';
-import { outlinedInputClasses } from '@mui/material/OutlinedInput';
-import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import TextField from "@mui/material/TextField";
+import { outlinedInputClasses } from "@mui/material/OutlinedInput";
+import { createTheme, ThemeProvider, useTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 import { Stack } from "@mui/material";
 
 const UserDetail = () => {
   const name = useRef();
   const username = useRef();
   const email = useRef();
+  const checkRef = useRef();
 
   const data = useSelector((state) => state.User);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   useEffect(() => {
     if (data.userKey) {
       const user = data.users.find((user) => user.id == data.userKey);
@@ -26,10 +29,10 @@ const UserDetail = () => {
   }, [data.userKey]);
 
   const submitHandler = (e) => {
-    e.preventDefault();
 
     const payload = {
-      id: data.users[data.users.length - 1].id + 1,
+      id: (data.users[data.users.length - 1]? data.users[data.users.length - 1].id :0)+1,
+      // id: data.users[data.users.length - 1]?.id + 1,
       name: name.current.value,
       username: username.current.value,
       email: email.current.value,
@@ -42,20 +45,24 @@ const UserDetail = () => {
     name.current.value = "";
     username.current.value = "";
     email.current.value = "";
-    // navigate("/");
-
-    // console.log(payload)
   };
 
   return (
     <>
-    <Stack spacing={2} justifyContent="center" alignItems="center">
-    <TextField label="Name" sx={{"width":"250px"}}/>
-    <TextField label="Username" sx={{"width":"250px"}}/>
-    <TextField label="Email" sx={{"width":"250px"}} />
+      <Stack spacing={2} justifyContent="center" alignItems="center">
+        <TextField label="Name" sx={{ width: "250px" }} inputRef={name} />
+        <TextField
+          label="Username"
+          sx={{ width: "250px" }}
+          inputRef={username}
+        />
+        <TextField label="Email" sx={{ width: "250px" }} inputRef={email} />
 
-    </Stack>
-    <div>
+        <Button variant="contained" endIcon={<AddIcon />} onClick={submitHandler}>
+          Add User
+        </Button>
+      </Stack>
+      {/* <div>
       <form
         style={{ display: "flex", flexDirection: "column" }}
         onSubmit={submitHandler}
@@ -84,10 +91,8 @@ const UserDetail = () => {
           </button>
         )}
       </form>
-      <Link to="/">
-        <button>View Users</button>
-      </Link>
-    </div>
+     
+    </div> */}
     </>
   );
 };

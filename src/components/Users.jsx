@@ -21,7 +21,7 @@ import { colors } from "@mui/material";
 const Users = () => {
   const dispatch = useDispatch();
   // User is a store name and users is a state object
-  const navigate = useNavigate();
+  
 
   const dataHandler = async () => {
     const data = await userData();
@@ -57,16 +57,11 @@ const Users = () => {
           </Button>
         )}
 
-        <Button variant="contained" endIcon={<AddIcon />} onClick={() => navigate("/userdetail")}>
+        {/* <Button variant="contained" endIcon={<AddIcon />} >
           Add User
-        </Button>
+        </Button> */}
       </Stack>
-      {/* {users.length > 0 && (
-        <button onClick={deleteAllHandler} style={{ marginTop: "15px" }}>
-          Delete All
-        </button>
-      )}
-      <button onClick={() => navigate("/userdetail")}>Add User</button> */}
+     
     </div>
   );
 };

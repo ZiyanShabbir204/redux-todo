@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Grid";
-import { Link } from "react-router-dom";
+
 
 const User = () => {
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ const User = () => {
                 >
                   <DeleteIcon />
                 </IconButton>
-                <Link to="/userdetail">
+               
                 
                 <Button
                   variant="outlined"
@@ -66,7 +66,7 @@ const User = () => {
                 >
                   Edit
                 </Button>
-                </Link>
+               
               </CardActions>
             </Card>
           </Grid>
