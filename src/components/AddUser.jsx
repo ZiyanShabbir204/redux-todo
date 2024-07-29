@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { Stack } from "@mui/material";
 
-const UserDetail = () => {
+const AddUser = () => {
   const name = useRef();
   const username = useRef();
   const email = useRef();
@@ -65,4 +65,4 @@ const UserDetail = () => {
   );
 };
 
-export default UserDetail;
+export default AddUser;

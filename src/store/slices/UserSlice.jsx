@@ -4,8 +4,9 @@ const userSlice =  createSlice({
     name : "todo",
     initialState: {users: [],userKey:null,loader:true},
     reducers : {
-        addUser(state,action){
+        getUser(state,action){
             state.users = action.payload
+            // state.loader = false
             
         },
         removeUser(state,action){
@@ -17,7 +18,9 @@ const userSlice =  createSlice({
     
         },
         setLoader(state,action){
+            
             state.loader = false
+            console.log("loader in reducer",state.loader)
 
         },
 
@@ -52,7 +55,7 @@ const userSlice =  createSlice({
 
 console.log(userSlice.actions);
 
-export const {addUser,removeUser,deleteAllUser,setUserKey,editUser,postUser,setLoader} = userSlice.actions
+export const {getUser,removeUser,deleteAllUser,setUserKey,editUser,postUser,setLoader} = userSlice.actions
 
 
 
