@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { deleteUser, userData } from "../api/jsonApi";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser, removeUser, setUserKey } from "../store/slices/UserSlice";
+// import { editUser,  setUserKey } from "../store/slices/UserSlice";
 import Box from "@mui/material/Box";
-
+import { removeUser } from "../actions";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -13,7 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-
+import { editUser } from "../actions";
 const User = ({ id, name, email, username }) => {
   const [textField, setTextField] = useState(false);
   const [nameState, setNameState] = useState("");
@@ -43,7 +43,7 @@ const User = ({ id, name, email, username }) => {
       email: emailState,
       username: usernameState,
     };
-    dispatch(setUserKey(id));
+    // dispatch(setUserKey(id));
     dispatch(editUser(payload));
     setTextField(!textField);
   };

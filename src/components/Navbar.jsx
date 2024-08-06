@@ -14,7 +14,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
-import { deleteAllUser } from "../store/slices/UserSlice";
+import { deleteAll } from "../actions";
+// import { deleteAllUser } from "../store/slices/UserSlice";
 const drawerWidth = 240;
 const navItems = ["DeleteAll"];
 
@@ -27,7 +28,7 @@ function DrawerAppBar(props) {
     setMobileOpen((prevState) => !prevState);
   };
   const deleteAllHandler = () => {
-    dispatch(deleteAllUser());
+    dispatch(deleteAll());
   };
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>

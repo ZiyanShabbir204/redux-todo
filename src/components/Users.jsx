@@ -8,13 +8,14 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
+import { getUser ,setLoader} from "../actions";
+
 
 import {
-  getUser,
   deleteAllUser,
   removeUser,
   setUserKey,
-  setLoader,
+
 } from "../store/slices/UserSlice";
 import AddUser from "./AddUser";
 import User from "./User";
@@ -24,20 +25,17 @@ import { colors } from "@mui/material";
 const Users = () => {
   const dispatch = useDispatch();
   // User is a store name and users is a state object
-  const loader = useSelector((state) => state.User.loader);
+  const loader = useSelector((state) => state.userReducer.loader);
 
   const dataHandler = async () => {
     const data = await userData();
     dispatch(getUser(data));
-    dispatch(setLoader())
-    console.log("data", data);
-
+    dispatch(setLoader(false));
   };
 
   useEffect(() => {
     dataHandler();
 
-    console.log("use effect check");
   }, []);
 
   const deleteAllHandler = () => {
@@ -45,27 +43,25 @@ const Users = () => {
   };
 
   // dispatch(setLoader())
-  const users = useSelector((state) => state.User.users);
-
-  console.log("user data", users);
+  // const users = useSelector((state) => state.User.users);
+  const users = useSelector((state) => state.userReducer.users);
+  console.log("user data zzz", users);
 
   return (
     <div>
-      {console.log(loader,'loader')}
+      {console.log(loader, "loader")}
       {loader ? (
-       
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "100px",
-              height: "100%"
-            }}
-          >
-            <CircularProgress />
-          </Box>
-       
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "100px",
+            height: "100%",
+          }}
+        >
+          <CircularProgress />
+        </Box>
       ) : (
         <Grid
           container

@@ -1,10 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { editUser, postUser } from "../store/slices/UserSlice";
+import { editUser} from "../store/slices/UserSlice";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import { Stack } from "@mui/material";
+import { postUser } from "../actions";
 
 const AddUser = () => {
   const name = useRef();
@@ -13,31 +14,26 @@ const AddUser = () => {
 
 
 
-  const data = useSelector((state) => state.User);
+  const data = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (data.userKey) {
-      const user = data.users.find((user) => user.id == data.userKey);
-      name.current.value = user.name;
-      username.current.value = user.username;
-      email.current.value = user.email;
-    }
-  }, [data.userKey]);
+ 
 
   const submitHandler = (e) => {
 
     const payload = {
       id: (data.users[data.users.length - 1]? data.users[data.users.length - 1].id :0)+1,
-      // id: data.users[data.users.length - 1]?.id + 1,
+     
       name: name.current.value,
       username: username.current.value,
       email: email.current.value,
     };
+    dispatch(postUser(payload))
+   
 
-    {
-      !data.userKey ? dispatch(postUser(payload)) : dispatch(editUser(payload));
-    }
+    // {
+    //   !data.userKey ? dispatch(postUser(payload)) : dispatch(editUser(payload));
+    // }
 
     name.current.value = "";
     username.current.value = "";
